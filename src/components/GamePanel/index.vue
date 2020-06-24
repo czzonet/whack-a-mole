@@ -9,7 +9,7 @@
     </ul>
 
     <div>
-      <div v-if="won()">
+      <div v-if="hasWon">
         <div class="success">YOU WIN!!!</div>
       </div>
       <div v-else>
@@ -47,6 +47,27 @@ export default Vue.extend({
       hasWon: false,
     };
   },
+  computed: {
+    gridSum() {
+      let sum = 0;
+      for (let i = 0; i < this.moleGrid.length; i++) {
+        const line = this.moleGrid[i];
+
+        for (let j = 0; j < line.length; j++) {
+          const unit = line[j];
+          sum += unit;
+        }
+      }
+      return sum;
+    },
+  },
+  watch: {
+    gridSum: {
+      handler() {
+        this.gridSum == 0 ? (this.hasWon = true) : null;
+      },
+    },
+  },
   methods: {
     /** 改动坐标点 需要保持追踪 */
     setMole(xCoord: number, yCoord: number, value: number) {
@@ -68,31 +89,10 @@ export default Vue.extend({
         1
       );
     },
-    won() {
-      if (this.hasWon) {
-        return true;
-      } else {
-        let sum = 0;
-        for (let i = 0; i < this.moleGrid.length; i++) {
-          const element = this.moleGrid[i];
-
-          for (let j = 0; j < element.length; j++) {
-            const unit = element[j];
-            sum += unit;
-          }
-        }
-
-        if (sum == 0) {
-          this.hasWon = true;
-        }
-
-        return this.hasWon;
-      }
-    },
   },
   mounted() {
     setInterval(() => {
-      console.log(this.won());
+      console.log(this.hasWon);
       this.generateMole();
     }, 1000);
   },
@@ -119,5 +119,8 @@ export default Vue.extend({
   border-radius: 50%;
   width: 50px;
   height: 50px;
+}
+li {
+  text-align: left;
 }
 </style>
