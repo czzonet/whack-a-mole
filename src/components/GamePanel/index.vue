@@ -10,16 +10,16 @@
 
     <div>
       <div v-if="won()">
-        <div class="success">YOU WON!</div>
+        <div class="success">YOU WIN!!!</div>
       </div>
       <div v-else>
         <table>
-          <tr v-for="(array,xCoord) in moleGrid" :key="xCoord">
-            <td v-for="(value,yCoord) in array" :key="yCoord">
+          <tr v-for="(array, xCoord) in moleGrid" :key="xCoord">
+            <td v-for="(value, yCoord) in array" :key="yCoord">
               <div
                 class="circle"
-                @click="squash(xCoord,yCoord)"
-                :style="{background:value?'orange':'black'}"
+                @click="squash(xCoord, yCoord)"
+                :style="{ background: value ? 'orange' : 'black' }"
               ></div>
             </td>
           </tr>
@@ -42,9 +42,9 @@ export default Vue.extend({
       moleGrid: [
         [0, 1, 0],
         [0, 0, 0],
-        [1, 0, 0]
+        [1, 0, 0],
       ],
-      hasWon: false
+      hasWon: false,
     };
   },
   methods: {
@@ -88,14 +88,14 @@ export default Vue.extend({
 
         return this.hasWon;
       }
-    }
+    },
   },
   mounted() {
     setInterval(() => {
       console.log(this.won());
       this.generateMole();
     }, 1000);
-  }
+  },
 });
 </script>
 
