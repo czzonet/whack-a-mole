@@ -45,6 +45,7 @@ export default Vue.extend({
         [1, 0, 0],
       ],
       hasWon: false,
+      interval: undefined as undefined | number,
     };
   },
   computed: {
@@ -64,6 +65,7 @@ export default Vue.extend({
   watch: {
     gridSum: {
       handler() {
+        clearInterval(this.interval);
         this.gridSum == 0 ? (this.hasWon = true) : null;
       },
     },
@@ -91,7 +93,7 @@ export default Vue.extend({
     },
   },
   mounted() {
-    setInterval(() => {
+    this.interval = setInterval(() => {
       console.log(this.hasWon);
       this.generateMole();
     }, 1000);
